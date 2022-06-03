@@ -1,4 +1,4 @@
-const {getAPIDogList} = require("./dogs");
+const {getAPIDogList} = require("./getDogs");
 const {Temperament} = require('../db');
 
 async function getAPITemperaments() {
