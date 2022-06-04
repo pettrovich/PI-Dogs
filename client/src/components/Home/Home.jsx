@@ -1,18 +1,43 @@
 import React from 'react';
-import {useEffect} from 'react';
+import {useEffect,useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {getDogs} from '../actions';
+import {getDogs,getTemperaments,filterByTemperament,filterByDataOrigin} from '../actions';
 import Card from '../Card/Card';
+import Pagination from '../Pagination/Pagination';
 
 export default function Home() {
     const dispatch = useDispatch();
-    const allDogs = useSelector(state => state.dogs);
-    useEffect(() => dispatch(getDogs()),[dispatch]);
+    const allDogs = useSelector(state => state.dogsView);
+    const allTemperaments = useSelector(state => state.temperaments);
+    
+    const [currentPage, setCurrentPage] = useState(1);
+    const [dogsPerPage/*, setDogsPerPage*/] = useState(8);
+    const indexOfLast = currentPage*dogsPerPage;
+    const indexOfFirst = indexOfLast - dogsPerPage;
+    const currentDogs = allDogs.slice(indexOfFirst,indexOfLast);
+
+    const pagination = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
+
+    useEffect(() => {
+        dispatch(getDogs());
+        dispatch(getTemperaments());},[dispatch]);
     
     function handleClick(e) {
         e.preventDefault();
         dispatch(getDogs());
+    }
+
+    function handleTemperamentFilter(e) {
+        dispatch(filterByTemperament(e.target.value));
+        setCurrentPage(1);
+    }
+
+    function handleDataOriginFilter(e) {
+        dispatch(filterByDataOrigin(e.target.value));
+        setCurrentPage(1);
     }
 
     return (
@@ -27,13 +52,17 @@ export default function Home() {
                     <option value="weight-asc">Peso (ascendente)</option>
                     <option value="weight-desc">Peso (descendente)</option>
                 </select>
-                <select>
-                    <option value="all">Todas</option>
+                <select onChange={e => handleTemperamentFilter(e)}>
+                    <option value="all">All Temperaments</option>
+                    {allTemperaments?.map(temperament => <option value={temperament}>{temperament}</option>)}
+                </select>
+                <select onChange={e => handleDataOriginFilter(e)}>
+                    <option value="all">Todas las Razas</option>
                     <option value="api">Existentes</option>
                     <option value="db">Agregadas</option>
                 </select>
-                {/* filtro por temperament */}
-                {allDogs?.map(dog => <Card name={dog.name}
+                <Pagination dogsPerPage={dogsPerPage} allDogs={allDogs} pagination={pagination} />
+                {currentDogs?.map(dog => <Card name={dog.name}
                                            image={dog.image}
                                            temperaments={dog.temperaments}
                                            weight={dog.weight}/>)}

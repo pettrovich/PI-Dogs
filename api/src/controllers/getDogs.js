@@ -17,12 +17,14 @@ async function getAPIDogList(breedName) {
         const height = breed.height.metric + " cm";
         const lifespan = breed.life_span;
         const temperaments = temperament ? temperament.split(", ") : [];
+        const fromAPI = true;
         return {id,
             name,
             image,
             weight,
             height,
             lifespan,
+            fromAPI,
             temperaments}
     });
     return apiData;
@@ -31,7 +33,7 @@ async function getAPIDogList(breedName) {
 async function getDBDogList(breedName,breedId) {
     let dogList = [];
     const template = {};
-    const attributes = ['id','name','weight','height','lifespan'];
+    const attributes = ['id','name','weight','height','lifespan','fromAPI'];
     if (breedName) template.name = breedName;
     if (breedId) template.name = breedId;
     dogList = await Dog.findAll({
@@ -46,8 +48,8 @@ async function getAllDogs(res) {
     const dogList1 = await getAPIDogList();
     const dogList2 = await getDBDogList();
     const dogList = dogList1.concat(dogList2).map(breed => {
-        const {name,image,temperaments,weight} = breed;
-        return {name,image,temperaments,weight};
+        const {name,image,temperaments,weight,fromAPI} = breed;
+        return {name,image,temperaments,weight,fromAPI};
     });
     return  res.json(dogList);
 }
@@ -76,4 +78,4 @@ async function getDogsById(id,res) {
     return res.status(404).send("No se encontraron perros con el id buscado.")
 }
 
-module.exports={getAllDogs,getDogsByName,getDogsById};
+module.exports={getAllDogs,getDogsByName,getDogsById,getAPIDogList};
