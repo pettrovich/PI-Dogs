@@ -12,7 +12,7 @@ export function getTemperaments () {
     return async function (dispatch) {
         return axios.get("http://localhost:3001/temperament")
                     .then(json => dispatch({type: 'GET_TEMPERAMENTS',
-                                            payload: json.data.map(temperament => temperament.name)}));
+                                            payload: json.data.map(temperament => temperament.name).sort()}));
     }
 }
 
@@ -27,5 +27,12 @@ export function filterByDataOrigin (dataOrigin) {
     return {
         type: 'FILTER_BY_DATA_ORIGIN',
         payload: dataOrigin
+    }
+}
+
+export function orderBy (ordering) {
+    return {
+        type: 'ORDER_BY',
+        payload: ordering
     }
 }

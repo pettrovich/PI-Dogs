@@ -2,7 +2,7 @@ import React from 'react';
 import {useEffect,useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {getDogs,getTemperaments,filterByTemperament,filterByDataOrigin} from '../actions';
+import {getDogs,getTemperaments,filterByTemperament,filterByDataOrigin,orderBy} from '../actions';
 import Card from '../Card/Card';
 import Pagination from '../Pagination/Pagination';
 
@@ -10,7 +10,7 @@ export default function Home() {
     const dispatch = useDispatch();
     const allDogs = useSelector(state => state.dogsView);
     const allTemperaments = useSelector(state => state.temperaments);
-    
+    const [order, setOrder] = useState('name-asc');
     const [currentPage, setCurrentPage] = useState(1);
     const [dogsPerPage/*, setDogsPerPage*/] = useState(8);
     const indexOfLast = currentPage*dogsPerPage;
@@ -25,19 +25,24 @@ export default function Home() {
         dispatch(getDogs());
         dispatch(getTemperaments());},[dispatch]);
     
-    function handleClick(e) {
+    function handleClick (e) {
         e.preventDefault();
         dispatch(getDogs());
     }
 
-    function handleTemperamentFilter(e) {
+    function handleTemperamentFilter (e) {
         dispatch(filterByTemperament(e.target.value));
         setCurrentPage(1);
     }
 
-    function handleDataOriginFilter(e) {
+    function handleDataOriginFilter (e) {
         dispatch(filterByDataOrigin(e.target.value));
         setCurrentPage(1);
+    }
+
+    function handleOrdering (e) {
+        dispatch(orderBy(e.target.value));
+        setOrder(e.target.value);
     }
 
     return (
@@ -46,7 +51,7 @@ export default function Home() {
             <h1>Henry Dogs Home</h1>
             <button onClick={e=> handleClick(e)}>refresh</button>
             <div>
-                <select>
+                <select onChange={e => handleOrdering(e)}>
                     <option value="name-asc">Orden alfabético (ascendente)</option>
                     <option value="name-desc">Orden alfabético (descendente)</option>
                     <option value="weight-asc">Peso (ascendente)</option>
@@ -62,6 +67,7 @@ export default function Home() {
                     <option value="db">Agregadas</option>
                 </select>
                 <Pagination dogsPerPage={dogsPerPage} allDogs={allDogs} pagination={pagination} />
+                <h5>Ordenado por {order}</h5>
                 {currentDogs?.map(dog => <Card name={dog.name}
                                            image={dog.image}
                                            temperaments={dog.temperaments}
