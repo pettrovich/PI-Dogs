@@ -3,6 +3,7 @@ import {useEffect,useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {getDogs,getTemperaments,filterByTemperament,filterByDataOrigin,orderBy} from '../actions';
+import Search from '../Search/Search';
 import Card from '../Card/Card';
 import Pagination from '../Pagination/Pagination';
 
@@ -51,6 +52,7 @@ export default function Home() {
             <h1>Henry Dogs Home</h1>
             <button onClick={e=> handleClick(e)}>refresh</button>
             <div>
+                <Search />
                 <select onChange={e => handleOrdering(e)}>
                     <option value="name-asc">Orden alfabético (ascendente)</option>
                     <option value="name-desc">Orden alfabético (descendente)</option>

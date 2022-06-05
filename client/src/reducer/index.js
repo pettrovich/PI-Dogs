@@ -10,7 +10,13 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 dogs: action.payload,
-                dogsView: action.payload,
+                dogsView: action.payload
+            };
+        case 'GET_DOGS_BY_NAME':
+            return {
+                ...state,
+                dogs: action.payload,
+                dogsView: action.payload
             };
         case 'GET_TEMPERAMENTS':
             return {
