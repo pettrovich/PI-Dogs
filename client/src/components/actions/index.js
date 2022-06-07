@@ -24,8 +24,10 @@ export function getTemperaments () {
     }
 }
 
-export function postDog () {
-    //
+export function postDog (payload) {
+    return async function (dispatch) {
+        return await axios.post('http://localhost:3001/dog',payload);
+    }
 }
 
 export function filterByTemperament (temperament) {

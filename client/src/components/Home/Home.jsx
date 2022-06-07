@@ -48,7 +48,7 @@ export default function Home() {
 
     return (
         <div>
-            <Link to='/dog'>Crear nueva raza</Link>
+            <Link to='/new_dog'><button>¡Crea tu propia raza!</button></Link>
             <h1>Henry Dogs Home</h1>
             <button onClick={e=> handleClick(e)}>refresh</button>
             <div>
@@ -61,7 +61,7 @@ export default function Home() {
                 </select>
                 <select onChange={e => handleTemperamentFilter(e)}>
                     <option value="all">All Temperaments</option>
-                    {allTemperaments?.map(temperament => <option value={temperament}>{temperament}</option>)}
+                    {allTemperaments?.map(temperament => <option key={temperament} value={temperament}>{temperament}</option>)}
                 </select>
                 <select onChange={e => handleDataOriginFilter(e)}>
                     <option value="all">Todas las Razas</option>
@@ -70,7 +70,8 @@ export default function Home() {
                 </select>
                 <Pagination dogsPerPage={dogsPerPage} allDogs={allDogs} pagination={pagination} />
                 <h5>Ordenado por {order}</h5>
-                {currentDogs?.map(dog => <Card name={dog.name}
+                {currentDogs?.map(dog => <Card key={dog.name}
+                                           name={dog.name}
                                            image={dog.image}
                                            temperaments={dog.temperaments}
                                            weight={dog.weight}/>)}

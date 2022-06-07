@@ -5,10 +5,11 @@ export default function Card({name, image, temperaments, weight}) {
     return (
         <div>
             <h3>{name}</h3>
-            <img src={image} alt={name} width="250px" />
+            {image ? <img src={image} alt={name} width="250px" /> : ''}
             <h5>{weight}</h5>
             <h5>Temperaments:</h5>
             <ul>{temperamentList}</ul>
+            
         </div>
     );
 }

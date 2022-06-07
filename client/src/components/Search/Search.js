@@ -13,12 +13,12 @@ export default function SearchBar () {
     function handleSubmit (e) {
         e.preventDefault();
         dispatch(getDogsByName(name));
-        setName('');
+        document.getElementById('search').value='';
     }
 
     return (
         <div>
-            <input type='text' placeholder='Buscar...' onChange={(e) => handleInputChange(e)}/>
+            <input id='search' type='text' placeholder='Buscar...' onChange={(e) => handleInputChange(e)}/>
             <button type='submit' onClick={(e) => handleSubmit(e)}>Buscar</button>
         </div>
     );

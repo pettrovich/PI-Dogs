@@ -39,7 +39,10 @@ async function getDBDogList(breedName,breedId) {
     dogList = await Dog.findAll({
         where: template,
         attributes,
-        include: Temperament
+        include: {
+            model: Temperament,
+            attributes: ['name']
+        }
     });
     return dogList;
 }
@@ -47,9 +50,14 @@ async function getDBDogList(breedName,breedId) {
 async function getAllDogs(res) {
     const dogList1 = await getAPIDogList();
     const dogList2 = await getDBDogList();
+    dogList2.forEach(dog => {
+        dog.temperaments = dog.Temperaments.map(t => t.name);
+        dog.weight = dog.weight + " kg";
+        dog.height = dog.height + " cm";
+    });
     const dogList = dogList1.concat(dogList2).map(breed => {
-        const {name,image,temperaments,weight,fromAPI} = breed;
-        return {name,image,temperaments,weight,fromAPI};
+        const {id,name,image,temperaments,weight,fromAPI} = breed;
+        return {id,name,image,temperaments,weight,fromAPI};
     });
     return  res.json(dogList);
 }
@@ -59,8 +67,8 @@ async function getDogsByName(name,res) {
     dogList1 = dogList1.filter(breed => breed.name.toLowerCase().includes(name.toLowerCase()));
     const dogList2 = await getDBDogList(name);
     const dogList = dogList1.concat(dogList2).map(breed => {
-        const {name,image,temperaments,weight} = breed;
-        return {name,image,temperaments,weight};
+        const {id,name,image,temperaments,weight} = breed;
+        return {id,name,image,temperaments,weight};
     });
     if (dogList.length > 0) return res.json(dogList);
     return res.status(404).send("No se encontraron perros con el nombre buscado.")
@@ -72,7 +80,7 @@ async function getDogsById(id,res) {
     const dogList2 = await getDBDogList(null,id);
     const dogList = dogList1.concat(dogList2).map(breed => {
         const {name,image,temperaments,weight,height,lifespan} = breed;
-        return {name,image,temperaments,weight,height,lifespan};
+        return {id,name,image,temperaments,weight,height,lifespan};
     });
     if (dogList.length > 0) return res.json(dogList);
     return res.status(404).send("No se encontraron perros con el id buscado.")

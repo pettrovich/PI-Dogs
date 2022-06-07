@@ -29,4 +29,8 @@ async function getAllTemperaments(res) {
     return res.json(DBTemperamentList);
 }
 
-module.exports={getAllTemperaments};
+async function getTemperamentIdByName(name) {
+    return await Temperament.findOne({where: {name}, attributes: ['id']});
+}
+
+module.exports={getAllTemperaments,getTemperamentIdByName};
