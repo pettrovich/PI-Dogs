@@ -1,5 +1,5 @@
-const { Dog, conn } = require('../../src/db.js');
-const { expect } = require('chai');
+const {Dog, conn} = require('../../src/db.js');
+const {expect} = require('chai');
 
 describe('Dog model', () => {
   before(() => conn.authenticate()
@@ -15,7 +15,7 @@ describe('Dog model', () => {
           .catch(() => done());
       });
       it('should work when its a valid name', () => {
-        Dog.create({ name: 'Pug' });
+        Dog.create({name: 'Pug'});
       });
     });
   });
