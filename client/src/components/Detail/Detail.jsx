@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {getDogById} from '../actions';
 
 export default function Detail() {
@@ -11,7 +11,9 @@ export default function Detail() {
     useEffect(() => dispatch(getDogById(id)),[dispatch,id]);
 
     return (
-        <div>{dog.length > 0 ?<div>
+        <div>
+            <Link to='/home'><button>Regresa a la Página Principal</button></Link>
+            {dog.length > 0 ?<div>
             <h1>{dog[0].name}</h1>
             {dog[0].image ? <img src={dog[0].image} alt={dog[0].name} width="400px" /> : ''}
             <h5>Weight: {dog[0].weight}</h5>
@@ -21,6 +23,6 @@ export default function Detail() {
             <ul>
                 {dog[0].temperaments.map(temperament => <li key={temperament}>{temperament}</li>)}
             </ul>
-        </div> : "Loading..."}</div>
+        </div> : <div>Loading...</div>}</div>
     );
 }
