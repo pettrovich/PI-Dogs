@@ -1,17 +1,22 @@
 import React from 'react';
 import NavBar from '../NavBar/NavBar';
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect} from 'react';
+import "./Home.css";
 
-
-
-        import {useEffect,useState} from 'react';
-        import {useDispatch, useSelector} from 'react-redux';
+        import {useState} from 'react';
         import {getDogs,getTemperaments,filterByTemperament,filterByDataOrigin,orderBy} from '../actions';
         import Card from '../Card/Card';
         import Pagination from '../Pagination/Pagination';
 
 export default function Home() {
-            const dispatch = useDispatch();
-            const allDogs = useSelector(state => state.dogsView);
+    const dispatch = useDispatch();
+    const allDogs = useSelector(state => state.dogsView);
+    useEffect(() => {
+        dispatch(getDogs());
+        dispatch(getTemperaments());},[dispatch]);
+    
+
             const allTemperaments = useSelector(state => state.temperaments);
             const [order, setOrder] = useState('name-asc');
             const [currentPage, setCurrentPage] = useState(1);
@@ -23,10 +28,6 @@ export default function Home() {
             const pagination = (pageNumber) => {
                 setCurrentPage(pageNumber);
             }
-
-            useEffect(() => {
-                dispatch(getDogs());
-                dispatch(getTemperaments());},[dispatch]);
 
             function handleTemperamentFilter (e) {
                 dispatch(filterByTemperament(e.target.value));
@@ -46,7 +47,18 @@ export default function Home() {
     return (
             <div>
             <NavBar />
-                    <div>
+            <div className='cards'>
+                {currentDogs?.map(dog => <Card key={dog.id}
+                                            id={dog.id}
+                                            name={dog.name}
+                                            image={dog.image}
+                                            temperaments={dog.temperaments}
+                                            weight={dog.weight}/>)}
+            </div>
+
+
+                        <Pagination dogsPerPage={dogsPerPage} allDogs={allDogs} pagination={pagination} />
+                        <h5>Ordenado por {order}</h5>
                         <select onChange={e => handleOrdering(e)}>
                             <option value="name-asc">Orden alfabético (ascendente)</option>
                             <option value="name-desc">Orden alfabético (descendente)</option>
@@ -62,15 +74,6 @@ export default function Home() {
                             <option value="api">Existentes</option>
                             <option value="db">Agregadas</option>
                         </select>
-                        <Pagination dogsPerPage={dogsPerPage} allDogs={allDogs} pagination={pagination} />
-                        <h5>Ordenado por {order}</h5>
-                        {currentDogs?.map(dog => <Card key={dog.id}
-                                                    id={dog.id}
-                                                    name={dog.name}
-                                                    image={dog.image}
-                                                    temperaments={dog.temperaments}
-                                                    weight={dog.weight}/>)}
-                    </div>
             </div>
     );
 }
