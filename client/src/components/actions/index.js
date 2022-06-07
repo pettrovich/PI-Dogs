@@ -16,6 +16,14 @@ export function getDogsByName (name) {
     }
 }
 
+export function getDogById (id) {
+    return async function (dispatch) {
+        return axios.get(`http://localhost:3001/dogs/${id}`)
+                    .then(json => dispatch({type: 'GET_DOG_BY_ID',
+                                            payload: json.data}));
+    }
+}
+
 export function getTemperaments () {
     return async function (dispatch) {
         return axios.get("http://localhost:3001/temperament")

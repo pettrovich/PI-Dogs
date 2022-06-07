@@ -70,11 +70,12 @@ export default function Home() {
                 </select>
                 <Pagination dogsPerPage={dogsPerPage} allDogs={allDogs} pagination={pagination} />
                 <h5>Ordenado por {order}</h5>
-                {currentDogs?.map(dog => <Card key={dog.name}
-                                           name={dog.name}
-                                           image={dog.image}
-                                           temperaments={dog.temperaments}
-                                           weight={dog.weight}/>)}
+                {currentDogs?.map(dog => <Card key={dog.id}
+                                               id={dog.id}
+                                               name={dog.name}
+                                               image={dog.image}
+                                               temperaments={dog.temperaments}
+                                               weight={dog.weight}/>)}
             </div>
         </div>
     );

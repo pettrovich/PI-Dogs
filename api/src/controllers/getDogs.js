@@ -35,15 +35,19 @@ async function getDBDogList(breedName,breedId) {
     const template = {};
     const attributes = ['id','name','weight','height','lifespan','fromAPI'];
     if (breedName) template.name = breedName;
-    if (breedId) template.name = breedId;
-    dogList = await Dog.findAll({
-        where: template,
-        attributes,
-        include: {
-            model: Temperament,
-            attributes: ['name']
-        }
-    });
+    if (breedId) template.id = breedId;
+    try {
+        dogList = await Dog.findAll({
+            where: template,
+            attributes,
+            include: {
+                model: Temperament,
+                attributes: ['name']
+            }
+        });
+    } catch (error) {
+        dogList=[];
+    }
     return dogList;
 }
 

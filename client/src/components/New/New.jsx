@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch,useSelector} from "react-redux";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {getTemperaments, postDog} from "../actions";
 
 export default function New() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [input, setInput] = useState ({
         name: '',
         weight_min: '',
@@ -65,7 +66,8 @@ export default function New() {
     function handleSubmit (e) {
         e.preventDefault();
         const {name, weight, height, lifespan, temperaments} =  input;
-        dispatch(postDog({name, weight, height, lifespan, temperaments}));
+        dispatch(postDog({name, weight, height, lifespan, temperaments}).then(alert('¡Nueva raza creada!')));
+        navigate("/home");
     }
 
     if (input.weight_min.length === 0) input.weight = `${input.weight_max}`;
