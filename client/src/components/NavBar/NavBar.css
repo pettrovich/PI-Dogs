@@ -39,8 +39,12 @@
     padding: 6px 10px;
     margin-top: 8px;
     margin-right: 16px;
-    background: #ddd;
+    background: black;
     font-size: 17px;
     border: none;
     cursor: pointer;
-  }
+}
+
+  .topnav .search-container button:hover {
+    color: yellow;
+}

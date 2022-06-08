@@ -6,8 +6,8 @@ export default function Card({id,name, image, temperaments, weight}) {
     const temperamentList = temperaments.map(temperament => <button key={temperament}>{temperament}</button>);
     return (
         <Link to={`/detail/${id}`} style={{textDecoration: 'none'}}>
-            <div class="flip-card">
-                <div class="flip-card-inner">
+            <div className="flip-card">
+                <div className="flip-card-inner">
                     <div className='flip-card-front'>
                         <img src={image || './NOPHOTO.jpg'} alt={name} />
                         <h1>{name}</h1>

@@ -1,4 +1,5 @@
 import React from "react";
+import "./Pagination.css";
 
 export default function Pagination ({cardsPerPage,allDogs,pagination,activePage}) {
     const pageNumbers = [];
@@ -11,7 +12,9 @@ export default function Pagination ({cardsPerPage,allDogs,pagination,activePage}
             {pageNumbers?.map(number => {
                 let active = (activePage === number);
                 return (
-                    <button className={active ? 'active' : 'inactive'} onClick={() => pagination(number)}>
+                    <button className={active ? 'active' : 'inactive'} 
+                            key={number}
+                            onClick={() => pagination(number)}>
                         {number}
                     </button>
                 )})}

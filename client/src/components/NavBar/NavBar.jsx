@@ -12,6 +12,8 @@ export default function NavBar ({pagination}) {
 
     function handleInputChange (e) {
         setName(e.target.value);
+        e.target.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') document.getElementById('submit').click();});
     }
 
     function handleRefresh (e) {
@@ -33,13 +35,20 @@ export default function NavBar ({pagination}) {
                             Home <FontAwesomeIcon icon={faRefresh} />
                 </span></Link>
                 <Link to='/new_dog'><span>Create New</span></Link>
-                <Link to='/detail/1'><span>
+                <span>
                     Detail View <FontAwesomeIcon icon={faCaretDown} />
-                </span></Link>
-                <div class='search-container'>
+                </span>
+                <Link to='/detail/1'>
+                    {/* <div className="dropdown-content">
+                        <span>Link 1</span>
+                        <span>Link 2</span>
+                        <span>Link 3</span>
+                    </div> */}
+                </Link>
+                <div className='search-container'>
                     <input id='search' name='search' type='text'
                            placeholder='Search..' onChange={handleInputChange}/>
-                    <button type='submit' onClick={handleSubmit}>
+                    <button id='submit' type='submit' onClick={handleSubmit}>
                         <FontAwesomeIcon icon={faSearch} />
                     </button>
                 </div>
