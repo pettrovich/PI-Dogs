@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {getDogs,getDogsByName} from '../actions';
 import {Link} from 'react-router-dom';
-import "./NavBar.css";
+
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faRefresh, faSearch, faCaretDown} from '@fortawesome/free-solid-svg-icons';
 
+import "./NavBar.css";
+import {getDogs,getDogsByName,orderBy} from '../actions';
+
 export default function NavBar ({pagination}) {
     const [name,setName] = useState('');
+    const [order,setOrder] = useState('');
     const dispatch = useDispatch();
 
     function handleInputChange (e) {
@@ -28,23 +31,38 @@ export default function NavBar ({pagination}) {
         pagination(1);
     }
 
+    function handleOrder (e) {
+        dispatch(orderBy(e.target.getAttribute('value')));
+        setOrder(e.target.getAttribute('value'));
+        pagination(1);
+    }
+
     return (
         <div>
             <div className='topnav'>
                 <Link to='/home'><span className='active' onClick={handleRefresh}>
-                            Home <FontAwesomeIcon icon={faRefresh} />
+                    Home <FontAwesomeIcon icon={faRefresh} />
                 </span></Link>
+                <span className='dropdown active'>
+                    Order By <FontAwesomeIcon icon={faCaretDown} />
+                    <div className="dropdown-content" onClick={handleOrder}>
+                        <span className={order==="name-asc" ? 'active' : 'inactive'} value="name-asc">Name (A to Z)</span>
+                        <span className={order==="name-desc" ? 'active' : 'inactive'} value="name-desc">Name (Z to A)</span>
+                        <span className={order==="weight-asc" ? 'active' : 'inactive'} value="weight-asc">Weight (ascending)</span>
+                        <span className={order==="weight-desc" ? 'active' : 'inactive'}value="weight-desc">Weight (descending)</span>
+                    </div>
+                </span>
                 <Link to='/new_dog'><span>Create New</span></Link>
-                <span>
+                {/* <span>
                     Detail View <FontAwesomeIcon icon={faCaretDown} />
                 </span>
                 <Link to='/detail/1'>
-                    {/* <div className="dropdown-content">
+                    <div className="dropdown-content">
                         <span>Link 1</span>
                         <span>Link 2</span>
                         <span>Link 3</span>
-                    </div> */}
-                </Link>
+                    </div>
+                </Link> */}
                 <div className='search-container'>
                     <input id='search' name='search' type='text'
                            placeholder='Search..' onChange={handleInputChange}/>

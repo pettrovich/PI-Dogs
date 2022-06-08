@@ -4,11 +4,12 @@ import {useEffect, useState} from 'react';
 
 import Card from '../Card/Card';
 import NavBar from '../NavBar/NavBar';
-        
-import "./Home.css";
+import Pagination from '../Pagination/Pagination';
 
-        import {getDogs,getTemperaments,filterByTemperament,filterByDataOrigin,orderBy} from '../actions';
-        import Pagination from '../Pagination/Pagination';
+import "./Home.css";
+import {getDogs} from '../actions';
+        
+        import {getTemperaments,filterByTemperament,filterByDataOrigin} from '../actions';
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function Home() {
         dispatch(getTemperaments());},[dispatch]);
     
     const [currentPage, setCurrentPage] = useState(1);
+    const [update, setUpdate] = useState(0);
     const [cardsPerPage/*, setCardsPerPage*/] = useState(8);
     const lastIndex = currentPage*cardsPerPage;
     const firstIndex = lastIndex - cardsPerPage;
@@ -26,10 +28,10 @@ export default function Home() {
 
     function pagination (pageNumber) {
         setCurrentPage(pageNumber);
+        setUpdate(update => update+1);
     }
 
             const allTemperaments = useSelector(state => state.temperaments);
-            const [order, setOrder] = useState('name-asc');
 
             function handleTemperamentFilter (e) {
                 dispatch(filterByTemperament(e.target.value));
@@ -41,13 +43,9 @@ export default function Home() {
                 setCurrentPage(1);
             }
 
-            function handleOrdering (e) {
-                dispatch(orderBy(e.target.value));
-                setOrder(e.target.value);
-            }
-
     return (
             <div>
+            {console.log(update)}
             <NavBar pagination={pagination}/>
             <div className='cards'>
                 {currentDogs?.map(dog => <Card key={dog.id}
@@ -59,14 +57,6 @@ export default function Home() {
             </div>
             <Pagination cardsPerPage={cardsPerPage} allDogs={allDogs} pagination={pagination} activePage={currentPage}/>
 
-
-                        <h5>Ordenado por {order}</h5>
-                        <select onChange={e => handleOrdering(e)}>
-                            <option value="name-asc">Orden alfabético (ascendente)</option>
-                            <option value="name-desc">Orden alfabético (descendente)</option>
-                            <option value="weight-asc">Peso (ascendente)</option>
-                            <option value="weight-desc">Peso (descendente)</option>
-                        </select>
                         <select onChange={e => handleTemperamentFilter(e)}>
                             <option value="all">All Temperaments</option>
                             {allTemperaments?.map(temperament => <option key={temperament} value={temperament}>{temperament}</option>)}
