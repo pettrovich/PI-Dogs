@@ -8,7 +8,7 @@ import {faRefresh, faSearch, faCaretDown} from '@fortawesome/free-solid-svg-icon
 import "./NavBar.css";
 import {filterByDataOrigin, filterByTemperament, getDogs, getDogsByName, orderBy} from '../actions';
 
-export default function NavBar ({pagination}) {
+export default function NavBar ({pagination,page}) {
     const [name,setName] = useState('');
     const [order,setOrder] = useState('');
     const [dataOrigin,setDataOrigin] = useState('all');
@@ -62,10 +62,14 @@ export default function NavBar ({pagination}) {
     return (
         <div>
             <div className='topnav'>
-                <Link to='/home'><span className='active' onClick={handleRefresh}>
+                <Link to='/home'>
+                {page==='home' ?
+                <span className='active' onClick={handleRefresh}>
                     Home <FontAwesomeIcon icon={faRefresh} />
-                </span></Link>
-                <span className='dropdown active'>
+                </span> :
+                <span>Home</span> 
+                }</Link>
+                {page==='home' && <span className='dropdown active'>
                     Order By <FontAwesomeIcon icon={faCaretDown} />
                     <div className="dropdown-content" onClick={handleOrder}>
                         <span className={order==="name-asc" ? 'active' : 'inactive'} value="name-asc">Name (A to Z)</span>
@@ -73,15 +77,15 @@ export default function NavBar ({pagination}) {
                         <span className={order==="weight-asc" ? 'active' : 'inactive'} value="weight-asc">Weight (ascending)</span>
                         <span className={order==="weight-desc" ? 'active' : 'inactive'}value="weight-desc">Weight (descending)</span>
                     </div>
-                </span>
-                <span className='dropdown2 active'>
+                </span>}
+                {page==='home' && <span className='dropdown2 active'>
                     Filter <FontAwesomeIcon icon={faCaretDown} />
                     <div className="dropdown2-content" onClick={handleFilters}>
                         <span value="temperament">By Temperament</span>
                         <span value="data-origin">By Data Origin</span>
                     </div>
-                </span>
-                <div id='dataOriginFilter' className='modal'>
+                </span>}
+                {page==='home' && <div id='dataOriginFilter' className='modal'>
                     <div className='modal-content'>
                         <button className={dataOrigin==="all" ? 'active' : 'inactive'}
                                 onClick={() => {
@@ -102,8 +106,8 @@ export default function NavBar ({pagination}) {
                                 X
                         </button>
                     </div>
-                </div>
-                <div id='temperamentFilter' className='modal2'>
+                </div>}
+                {page==='home' && <div id='temperamentFilter' className='modal2'>
                     <div className='modal-content'>
                         <button className={temperament==='all' ? 'active' : 'inactive'}
                                 onClick={() => {
@@ -125,9 +129,9 @@ export default function NavBar ({pagination}) {
                                 X
                         </button>
                     </div>
-                </div>
-
-                <Link to='/new_dog'><span>Create New</span></Link>
+                </div>}
+                {page==='detail' && <span className='active'>Detail View</span>}
+                <Link to='/new_dog'><span className={page==='new' ? 'active' : 'inactive'}>Create New</span></Link>
                 <div className='search-container'>
                     <input id='search' name='search' type='text'
                            placeholder='Search..' onChange={handleInputChange}/>

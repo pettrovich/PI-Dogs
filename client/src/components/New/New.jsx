@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch,useSelector} from "react-redux";
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+
 import {getTemperaments, postDog} from "../actions";
+import NavBar from "../NavBar/NavBar";
 
 export default function New() {
     const dispatch = useDispatch();
@@ -108,7 +110,7 @@ export default function New() {
 
     return (
         <div>
-            <Link to='/home'><button>Regresa a la Página Principal</button></Link>
+            <NavBar page={'new'} />
             <h2>Creación de Nuevas Razas</h2>
             <form onSubmit={handleSubmit}>
                 <div>

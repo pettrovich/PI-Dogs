@@ -8,8 +8,6 @@ import Pagination from '../Pagination/Pagination';
 
 import "./Home.css";
 import {getDogs,getTemperaments} from '../actions';
-        
-        import {filterByTemperament} from '../actions';
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -34,7 +32,7 @@ export default function Home() {
     return (
         <div>
             {console.log(update)}
-            <NavBar pagination={pagination}/>
+            <NavBar pagination={pagination} page='home'/>
             <div className='cards'>
                 {currentDogs?.map(dog => <Card key={dog.id}
                                             id={dog.id}
