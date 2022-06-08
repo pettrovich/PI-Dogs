@@ -23,6 +23,6 @@ export default function Detail() {
             <ul>
                 {dog[0].temperaments.map(temperament => <li key={temperament}>{temperament}</li>)}
             </ul>
-        </div> : <div class="loader"></div>}</div>
+        </div> : <div className="loader"></div>}</div>
     );
 }
