@@ -14,9 +14,9 @@ export default function Detail() {
     useEffect(() => dispatch(getDogById(id)),[dispatch,id]);
 
     return (
-        <div>
+        <div>{console.log(dog[0])}
             <NavBar page={'detail'} />
-            {dog.length > 0 ?
+            {dog.length > 0 && dog[0].id === id ?
             <div className='details'>
                 {dog[0].image ? <img src={dog[0].image} alt={dog[0].name}/> : ''}
                 <div className='box'>
