@@ -1,12 +1,13 @@
 import React from 'react';
-import NavBar from '../NavBar/NavBar';
 import {useDispatch, useSelector} from 'react-redux';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
+
+import Card from '../Card/Card';
+import NavBar from '../NavBar/NavBar';
+        
 import "./Home.css";
 
-        import {useState} from 'react';
         import {getDogs,getTemperaments,filterByTemperament,filterByDataOrigin,orderBy} from '../actions';
-        import Card from '../Card/Card';
         import Pagination from '../Pagination/Pagination';
 
 export default function Home() {
@@ -14,20 +15,21 @@ export default function Home() {
     const allDogs = useSelector(state => state.dogsView);
     useEffect(() => {
         dispatch(getDogs());
+        setCurrentPage(1);
         dispatch(getTemperaments());},[dispatch]);
     
+    const [currentPage, setCurrentPage] = useState(1);
+    const [cardsPerPage/*, setCardsPerPage*/] = useState(8);
+    const lastIndex = currentPage*cardsPerPage;
+    const firstIndex = lastIndex - cardsPerPage;
+    const currentDogs = allDogs.slice(firstIndex,lastIndex);
+
+    function pagination (pageNumber) {
+        setCurrentPage(pageNumber);
+    }
 
             const allTemperaments = useSelector(state => state.temperaments);
             const [order, setOrder] = useState('name-asc');
-            const [currentPage, setCurrentPage] = useState(1);
-            const [dogsPerPage/*, setDogsPerPage*/] = useState(8);
-            const indexOfLast = currentPage*dogsPerPage;
-            const indexOfFirst = indexOfLast - dogsPerPage;
-            const currentDogs = allDogs.slice(indexOfFirst,indexOfLast);
-
-            const pagination = (pageNumber) => {
-                setCurrentPage(pageNumber);
-            }
 
             function handleTemperamentFilter (e) {
                 dispatch(filterByTemperament(e.target.value));
@@ -46,7 +48,7 @@ export default function Home() {
 
     return (
             <div>
-            <NavBar />
+            <NavBar pagination={pagination}/>
             <div className='cards'>
                 {currentDogs?.map(dog => <Card key={dog.id}
                                             id={dog.id}
@@ -55,9 +57,9 @@ export default function Home() {
                                             temperaments={dog.temperaments}
                                             weight={dog.weight}/>)}
             </div>
+            <Pagination cardsPerPage={cardsPerPage} allDogs={allDogs} pagination={pagination} activePage={currentPage}/>
 
 
-                        <Pagination dogsPerPage={dogsPerPage} allDogs={allDogs} pagination={pagination} />
                         <h5>Ordenado por {order}</h5>
                         <select onChange={e => handleOrdering(e)}>
                             <option value="name-asc">Orden alfabético (ascendente)</option>
