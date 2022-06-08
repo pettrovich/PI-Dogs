@@ -1,3 +1,32 @@
+.details {
+    margin: 25px; 
+    display: flex;
+    justify-content: space-around;
+    background-color: yellow;
+}
+
+.details img {
+    max-width: 500px;
+    margin: 25px; 
+    display: flex;
+    background-color: yellow;
+}
+
+.box {
+    flex-basis: 50%;
+    background-color: black;
+    color: yellow;
+}
+
+h5 {
+    font-size: 20px;
+    margin: 10px;
+}
+
+.temperament {
+    margin: 5px;
+}
+
 .loader {
     border: 16px solid black;
     border-radius: 50%;
