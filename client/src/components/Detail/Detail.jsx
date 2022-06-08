@@ -14,22 +14,22 @@ export default function Detail() {
     useEffect(() => dispatch(getDogById(id)),[dispatch,id]);
 
     return (
-        <div>{console.log(dog[0])}
+        <div>
             <NavBar page={'detail'} />
             {dog.length > 0 && dog[0].id === id ?
             <div className='details'>
-                {dog[0].image ? <img src={dog[0].image} alt={dog[0].name}/> : ''}
+                {<img src={dog[0].image || '/NOPHOTO.jpg'} alt={dog[0].name}/>}
                 <div className='box'>
                     <h1>{dog[0].name}</h1>
                     <h5>Weight: {dog[0].weight}</h5>
                     <h5>Height: {dog[0].height}</h5>
                     <h5>Lifespan: {dog[0].lifespan}</h5>
                     <h5>Temperaments:</h5>
-                    {dog[0].temperaments.map(temperament => (
+                    {dog[0].temperaments?.map(temperament => (
                         <span className='temperament' key={temperament}>
                             {temperament}
                         </span>
-                    ))}
+                    ))}}
                 </div>
             </div> : <div className="loader"></div>}
         </div>
