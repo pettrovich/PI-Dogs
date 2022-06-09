@@ -7,7 +7,7 @@ import NavBar from '../NavBar/NavBar';
 import Pagination from '../Pagination/Pagination';
 
 import "./Home.css";
-import {getDogs,getTemperaments} from '../actions';
+import {getDogs,getTemperaments} from '../../actions';
 
 export default function Home() {
     const dispatch = useDispatch();

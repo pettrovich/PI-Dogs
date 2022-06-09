@@ -29,17 +29,13 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 temperaments: action.payload
             };
-        case 'FILTER_BY_TEMPERAMENT':
-            if (action.payload === "all") return {...state, dogsView: state.dogs};
+        case 'FILTER':
+            let filteredDogs = state.dogs;
+            if (action.payload[0] !== "all") filteredDogs = filteredDogs.filter(dog => ((action.payload[0] === "api") === dog.fromAPI));
+            if (action.payload[1] !== "all") filteredDogs = filteredDogs.filter(dog => dog.temperaments.includes(action.payload[1]));
             return {
                 ...state,
-                dogsView: state.dogs.filter(dog => dog.temperaments.includes(action.payload))
-            }; 
-        case 'FILTER_BY_DATA_ORIGIN':
-            if (action.payload === "all") return {...state, dogsView: state.dogs};
-            return {
-                ...state,
-                dogsView: state.dogs.filter(dog => ((action.payload === "api") === dog.fromAPI))
+                dogsView: filteredDogs
             };
         case 'ORDER_BY':
             if (action.payload === "name-asc") {

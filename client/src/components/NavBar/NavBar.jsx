@@ -3,10 +3,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faRefresh, faSearch, faCaretDown} from '@fortawesome/free-solid-svg-icons';
+import {faRefresh, faSearch, faCaretDown, faPaw} from '@fortawesome/free-solid-svg-icons';
 
 import "./NavBar.css";
-import {filterByDataOrigin, filterByTemperament, getDogs, getDogsByName, orderBy} from '../actions';
+import {filter, getDogs, getDogsByName, orderBy} from '../../actions';
 
 export default function NavBar ({pagination,page}) {
     const [name,setName] = useState('');
@@ -23,6 +23,8 @@ export default function NavBar ({pagination,page}) {
     }
 
     function handleRefresh (e) {
+        setDataOrigin('all');
+        setTemperament('all');
         dispatch(getDogs());
         pagination(1);
     }
@@ -40,22 +42,14 @@ export default function NavBar ({pagination,page}) {
         pagination(1);
     }
 
-    
-    function handleFilters (e) {
-        if (e.target.getAttribute('value') === 'data-origin')
-            document.getElementById('dataOriginFilter').style.display = "block";
-        else document.getElementById('temperamentFilter').style.display = "block";
+    function changeFilters () {
+        document.getElementById('FilterMenu').style.display = "block";
     }
 
-    function handleDataOriginFilter (origin) {
+    function handleFilter (origin, temperament) {
         setDataOrigin(origin);
-        dispatch(filterByDataOrigin(origin));
-        pagination(1);
-    }
-
-    function handleTemperamentFilter (temperament) {
         setTemperament(temperament);
-        dispatch(filterByTemperament(temperament));
+        dispatch(filter(origin,temperament));
         pagination(1);
     }
 
@@ -80,54 +74,49 @@ export default function NavBar ({pagination,page}) {
                 </span>}
                 {page==='home' && <span className='dropdown2 active'>
                     Filter <FontAwesomeIcon icon={faCaretDown} />
-                    <div className="dropdown2-content" onClick={handleFilters}>
+                    <div className="dropdown2-content" onClick={changeFilters}>
                         <span value="temperament">By Temperament</span>
                         <span value="data-origin">By Data Origin</span>
                     </div>
                 </span>}
-                {page==='home' && <div id='dataOriginFilter' className='modal'>
+                {page==='home' && <div id='FilterMenu' className='modal'>
                     <div className='modal-content'>
-                        <button className={dataOrigin==="all" ? 'active' : 'inactive'}
-                                onClick={() => {
-                                    handleDataOriginFilter('all')
-                                }}>Show all</button>
-                        <button className={dataOrigin==="api" ? 'active' : 'inactive'}
-                                onClick={() => {
-                                    handleDataOriginFilter('api');
-                                }}>The Dog API</button>
-                        <button className={dataOrigin==="db" ? 'active' : 'inactive'}
-                                onClick={() => {
-                                    handleDataOriginFilter('db');
-                                }}>New Database</button>
+                        <div>
                         <button
                             className='close'
                             onClick={() => 
-                            document.getElementById('dataOriginFilter').style.display = "none"}>
+                            document.getElementById('FilterMenu').style.display = "none"}>
                                 X
                         </button>
-                    </div>
-                </div>}
-                {page==='home' && <div id='temperamentFilter' className='modal2'>
-                    <div className='modal-content'>
+                        <label>Data Origin: </label>
+                        <button className={dataOrigin==="all" ? 'active' : 'inactive'}
+                                onClick={() => {
+                                    handleFilter('all',temperament)
+                                }}>Show all</button>
+                        <button className={dataOrigin==="api" ? 'active' : 'inactive'}
+                                onClick={() => {
+                                    handleFilter('api',temperament);
+                                }}>The Dog API</button>
+                        <button className={dataOrigin==="db" ? 'active' : 'inactive'}
+                                onClick={() => {
+                                    handleFilter('db',temperament);
+                                }}>New Database</button>
+                        </div><div><FontAwesomeIcon icon={faPaw} /> <FontAwesomeIcon icon={faPaw} /> <FontAwesomeIcon icon={faPaw} /></div><div>
+                        <label>Temperament: </label>
                         <button className={temperament==='all' ? 'active' : 'inactive'}
                                 onClick={() => {
-                                    handleTemperamentFilter('all');
+                                    handleFilter(dataOrigin,'all');
                                 }}>Show all</button>
                         {allTemperaments?.map(t => (
                             <button key={t}
                                     className={temperament === t ? 'active' : 'inactive'}
                                     onClick={() => {
-                                        handleTemperamentFilter(t);
+                                        handleFilter(dataOrigin,t);
                                     }}>
                                     {t}
                             </button>
                         ))}
-                        <button
-                            className='close'
-                            onClick={() => 
-                            document.getElementById('temperamentFilter').style.display = "none"}>
-                                X
-                        </button>
+                        </div>
                     </div>
                 </div>}
                 {page==='detail' && <span className='active'>Detail View</span>}

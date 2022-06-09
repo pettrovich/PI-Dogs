@@ -40,17 +40,10 @@ export function postDog (payload) {
     }
 }
 
-export function filterByTemperament (temperament) {
+export function filter (dataOrigin, temperament) {
     return {
-        type: 'FILTER_BY_TEMPERAMENT',
-        payload: temperament
-    }
-}
-
-export function filterByDataOrigin (dataOrigin) {
-    return {
-        type: 'FILTER_BY_DATA_ORIGIN',
-        payload: dataOrigin
+        type: 'FILTER',
+        payload: [dataOrigin, temperament]
     }
 }
 

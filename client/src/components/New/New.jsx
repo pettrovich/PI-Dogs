@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch,useSelector} from "react-redux";
 import {useNavigate} from 'react-router-dom';
 
-import {getTemperaments, postDog} from "../actions";
+import {getTemperaments, postDog} from "../../actions";
 import NavBar from "../NavBar/NavBar";
 import "./New.css";
 

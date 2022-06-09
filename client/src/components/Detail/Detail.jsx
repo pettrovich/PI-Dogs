@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from "react-router-dom";
 
-import {getDogById} from '../actions';
+import {getDogById} from '../../actions';
 import NavBar from "../NavBar/NavBar";
 import './Detail.css';
 
