@@ -72,12 +72,8 @@ export default function NavBar ({pagination,page}) {
                         <span className={order==="weight-desc" ? 'active' : 'inactive'}value="weight-desc">Weight (descending)</span>
                     </div>
                 </span>}
-                {page==='home' && <span className='dropdown2 active'>
-                    Filter <FontAwesomeIcon icon={faCaretDown} />
-                    <div className="dropdown2-content" onClick={changeFilters}>
-                        <span value="temperament">By Temperament</span>
-                        <span value="data-origin">By Data Origin</span>
-                    </div>
+                {page==='home' && <span className='active' onClick={changeFilters}>
+                    Filter
                 </span>}
                 {page==='home' && <div id='FilterMenu' className='modal'>
                     <div className='modal-content'>
