@@ -29,7 +29,7 @@ export default function Detail() {
                         <span className='temperament' key={temperament}>
                             {temperament}
                         </span>
-                    ))}}
+                    ))}
                 </div>
             </div> : <div className="loader"></div>}
         </div>
