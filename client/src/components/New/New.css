@@ -1,0 +1,49 @@
+
+.form1 input[type="text"],
+.form1 input[type="number"]
+{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	outline: none;
+	display:inline-block;
+	width: 50%;
+	padding: 7px;
+	border: none;
+	border-bottom: 1px solid #ddd;
+	background: transparent;
+	margin-bottom: 5px;
+	font: 16px Arial, Helvetica, sans-serif;
+	height: 30px;
+    color: white;
+}
+
+.form1 input[type="text"]
+{
+	width: 30%;
+}
+
+.form1 input[type="number"]
+{
+	width: 15%;
+}
+
+.form1 .label {
+    float: left;
+	height: 30px;
+}
+
+.form1 span.required{
+	color:red;
+	font-size: 12px;
+}
+
+.form1 button[type="submit"]
+{
+    background: yellow;
+    color: black;
+    border-radius: 5px;
+    font-size: 120%;
+    transition-duration: 0.4s;
+	cursor: pointer
+}

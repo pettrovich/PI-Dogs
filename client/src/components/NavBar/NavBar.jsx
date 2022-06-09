@@ -132,13 +132,13 @@ export default function NavBar ({pagination,page}) {
                 </div>}
                 {page==='detail' && <span className='active'>Detail View</span>}
                 <Link to='/new_dog'><span className={page==='new' ? 'active' : 'inactive'}>Create New</span></Link>
-                <div className='search-container'>
+                {page==='home' && <div className='search-container'>
                     <input id='search' name='search' type='text'
                            placeholder='Search..' onChange={handleInputChange}/>
                     <button id='submit' type='submit' onClick={handleSubmit}>
                         <FontAwesomeIcon icon={faSearch} />
                     </button>
-                </div>
+                </div>}
             </div>
         </div>
     );

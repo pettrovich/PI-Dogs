@@ -115,6 +115,19 @@
     border: 2px solid black;
     width: 70%;
 }
+
+.modal-content button {
+    background-color: #ddd;
+    border: none;
+    color: black;
+    font-size: 12px;
+    padding: 10px;
+    text-align: center;
+    display: inline-block;
+    margin: 2px;
+    cursor: pointer;
+    border-radius: 16px;
+}
   
 .close {
     color: #aaaaaa;

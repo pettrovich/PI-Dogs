@@ -32,6 +32,20 @@
     color: yellow;
 }
 
+.box button,
+.box2 button {
+    background-color: #ddd;
+    border: none;
+    color: black;
+    font-size: 12px;
+    padding: 10px;
+    text-align: center;
+    display: inline-block;
+    margin: 2px;
+    cursor: default;
+    border-radius: 16px;
+}
+
 .box0 {
     max-width: 20%;
 }
