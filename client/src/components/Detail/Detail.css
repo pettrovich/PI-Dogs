@@ -59,6 +59,10 @@ h5 {
     margin: 5px;
 }
 
+.error404 {
+    width: 100%;
+}
+
 .loader {
     position: absolute;
     top: 200px;

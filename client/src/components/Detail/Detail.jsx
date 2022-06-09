@@ -26,12 +26,12 @@ export default function Detail() {
                     <h5>Lifespan: {dog[0].lifespan}</h5>
                     <h5>Temperaments:</h5>
                     {dog[0].temperaments?.map(temperament => (
-                        <span className='temperament' key={temperament}>
+                        <button className='temperament' key={temperament}>
                             {temperament}
-                        </span>
+                        </button>
                     ))}
                 </div>
-            </div> : <div className="loader"></div>}
+            </div> : (dog === '404' ? <img className='error404' src='/404.jpg' alt='404'/> : <div className="loader"></div>)}
         </div>
     );
 }

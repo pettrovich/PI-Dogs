@@ -20,7 +20,9 @@ export function getDogById (id) {
     return async function (dispatch) {
         return axios.get(`http://localhost:3001/dogs/${id}`)
                     .then(json => dispatch({type: 'GET_DOG_BY_ID',
-                                            payload: json.data}));
+                                            payload: json.data}))
+                    .catch(error => dispatch({type: 'GET_DOG_BY_ID',
+                    payload: '404'}));
     }
 }
 
