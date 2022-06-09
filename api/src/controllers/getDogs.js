@@ -56,8 +56,6 @@ async function getAllDogs(res) {
     const dogList2 = await getDBDogList();
     dogList2.forEach(dog => {
         dog.temperaments = dog.Temperaments.map(t => t.name);
-        dog.weight = dog.weight + " kg";
-        dog.height = dog.height + " cm";
     });
     const dogList = dogList1.concat(dogList2).map(breed => {
         const {id,name,image,temperaments,weight,fromAPI} = breed;
@@ -83,7 +81,8 @@ async function getDogsById(id,res) {
     dogList1 = dogList1.filter(dog => dog.id == id);
     const dogList2 = await getDBDogList(null,id);
     const dogList = dogList1.concat(dogList2).map(breed => {
-        const {name,image,temperaments,weight,height,lifespan} = breed;
+        let {name,image,temperaments,Temperaments,weight,height,lifespan} = breed;
+        if (!temperaments) temperaments = Temperaments.map(t => t.name);
         return {id,name,image,temperaments,weight,height,lifespan};
     });
     if (dogList.length > 0) return res.json(dogList);
