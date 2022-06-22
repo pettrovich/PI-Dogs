@@ -7,6 +7,11 @@ import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import store from "./store/index";
 
+import axios from 'axios';
+
+// axios.defaults.baseURL = process.env.REACT_APP_API || 'http://localhost:3001';
+axios.defaults.baseURL = 'https://henrydogs-0.herokuapp.com'
+
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
